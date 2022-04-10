@@ -7,7 +7,7 @@ const { default: axios } = require('axios');
 const { INTERNAL_TOKEN } = require('./utils/dev_config');
 const router = express.Router();
 
-const env = getEnv();
+
 
 const telegraf = font2base64.encodeToDataUrlSync(
   "./fonts/PPTelegraf-Medium.otf"
@@ -19,6 +19,7 @@ const app = express()
 const port = 3000
 
 const ipfsUploadTask = async(contribution_meta_array, ipfs) => {
+  const env = await  getEnv();
   let options = {
     warpWithDirectory: false,
     progress: (prog) => console.log(`Saved :${prog}`),
