@@ -18,8 +18,7 @@ const sfMono = font2base64.encodeToDataUrlSync("./fonts/SF-Mono-Medium.otf");
 const app = express()
 const port = 3000
 
-const ipfsUploadTask = async(contribution_meta_array, ipfs) => {
-  const env = await  getEnv();
+const ipfsUploadTask = async(contribution_meta_array, ipfs, env) => {
   let options = {
     warpWithDirectory: false,
     progress: (prog) => console.log(`Saved :${prog}`),
@@ -99,6 +98,7 @@ const ipfsUploadTask = async(contribution_meta_array, ipfs) => {
 }
 
 router.post("/upload", async (req, res) => {
+  const env = await  getEnv();
   const projectId = env.INFURA_TOKEN;
   const projectSecret = env.INFURA_SECRET;
   const auth =
@@ -124,7 +124,7 @@ router.post("/upload", async (req, res) => {
       res.status(400).send('Bad body type') 
     }else{
       try {
-        ipfsUploadTask(contribution_meta_array, ipfs)
+        ipfsUploadTask(contribution_meta_array, ipfs,env)
         res.status(200).send({task:`started`})
     
       } catch (error) {
