@@ -1,0 +1,18 @@
+{
+  "name": "ipfs_upload_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "ipfs-http-client": "^56.0.2",
+    "node-font2base64": "^0.7.1",
+    "node-html-to-image": "^3.2.4",
+    "aws-sdk": "^2.1107.0"
+  }
+}

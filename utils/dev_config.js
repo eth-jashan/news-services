@@ -1,0 +1,12 @@
+const INFURA_TOKEN = {
+  INFURA_TOKEN: "9c2f60cf03db4026a788eeed43d28fb4",
+  INFURA_SECRET: "c32cd10c3b6c456789127ca3cb71a055",
+};
+const INTERNAL_TOKEN = "5287bcfc-387b-4f91-bc44-278825b73831";
+const BACKEND_SERVER_URI = "http://localhost:5000";
+
+module.exports = {
+  INFURA_TOKEN,
+  INTERNAL_TOKEN,
+  BACKEND_SERVER_URI,
+};
