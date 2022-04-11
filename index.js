@@ -3,6 +3,7 @@ const nodeHtmlToImage = require("node-html-to-image");
 const { create } = require("ipfs-http-client");
 const font2base64 = require("node-font2base64");
 const { getEnv } = require("./utils/env_helper");
+var cors = require('cors')
 const { default: axios } = require('axios');
 const { INTERNAL_TOKEN } = require('./utils/dev_config');
 const router = express.Router();
@@ -16,7 +17,7 @@ const sfMono = font2base64.encodeToDataUrlSync("./fonts/SF-Mono-Medium.otf");
 
 
 const app = express()
-const port = 3000
+const port = 3001
 
 const ipfsUploadTask = async(contribution_meta_array, ipfs, env) => {
   let options = {
@@ -83,7 +84,6 @@ const ipfsUploadTask = async(contribution_meta_array, ipfs, env) => {
         const results = await ipfs.add(JSON.stringify(metaData))
         if(result.path){
           const data = {ipfs_url:results.path,contribution_id:x.id}
-          console.log('body',data)
           await axios.post('https://staging.api.drepute.xyz/contrib/update/ipfs',data,{headers:{
             "X-Authentication": env.internalToken,
           }})
@@ -97,7 +97,7 @@ const ipfsUploadTask = async(contribution_meta_array, ipfs, env) => {
   })
 }
 
-router.post("/upload", async (req, res) => {
+router.post("/upload",cors(), async (req, res) => {
   const env = await  getEnv();
   const projectId = env.INFURA_TOKEN;
   const projectSecret = env.INFURA_SECRET;
@@ -112,7 +112,8 @@ router.post("/upload", async (req, res) => {
     },
   });
   const { contribution_meta_array } = req.body
-  // { dao_name, contri_title, claimer, signer, date_of_approve, id, dao_logo_url,feedback,work_type }
+
+  console.log(contribution_meta_array)
 
   contribution_meta_array.map((x, i)=>{
     
@@ -136,6 +137,7 @@ router.post("/upload", async (req, res) => {
 });
 
 app.use(express.json());
+app.use(cors())
 
 app.use('/',router)
 
