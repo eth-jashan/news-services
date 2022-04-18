@@ -17,7 +17,7 @@ const sfMono = font2base64.encodeToDataUrlSync("./fonts/SF-Mono-Medium.otf");
 
 
 const app = express()
-const port = 3001
+const port = 3000
 
 const ipfsUploadTask = async(contribution_meta_array, ipfs, env) => {
   let options = {
@@ -85,7 +85,8 @@ const ipfsUploadTask = async(contribution_meta_array, ipfs, env) => {
         if(result.path){
           const data = {ipfs_url:results.path,contribution_id:x.id}
           await axios.post('https://staging.api.drepute.xyz/contrib/update/ipfs',data,{headers:{
-            "X-Authentication": '7cd59775-1eef-4e98-b9e5-ae224714b0af',
+            // "X-Authentication": '7cd59775-1eef-4e98-b9e5-ae224714b0af',
+            "X-Authentication": env.internalToken
           }})
           console.log('response updates', data)
         }
